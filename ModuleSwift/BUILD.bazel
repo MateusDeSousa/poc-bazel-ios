@@ -1,0 +1,13 @@
+load("@build_bazel_rules_ios//rules:framework.bzl", "apple_framework")
+
+apple_framework(
+    name = "ModuleSwift",
+    platforms = {"ios": "12.1"},
+    srcs = glob([
+        "*.swift"
+    ]),   
+    deps = [],
+    visibility = [
+        "//visibility:public"
+    ],
+)

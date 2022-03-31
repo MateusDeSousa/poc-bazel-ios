@@ -1,0 +1,34 @@
+load("@build_bazel_rules_ios//rules:app.bzl", "ios_application")
+load("@build_bazel_rules_ios//rules:framework.bzl", "apple_framework", "apple_framework_packaging")
+
+ios_application(
+    name = "Application",
+    bundle_id = "poc.intepolation",
+    srcs = glob([
+        "*.swift"
+    ]),
+    minimum_os_version = "12.1",
+    families = [
+        "iphone"
+    ],
+    infoplists = ["//Application:UrlGet-Info.plist"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@//ModuleObjc",
+        "@//ModuleSwift"
+    ]
+)
+
+apple_framework(
+    name = "Main",
+    platforms = {"ios": "12.1"},
+    srcs = glob([
+        "*.swift"
+    ]),   
+    deps = [
+        "@//ModuleObjc",
+    ],
+    visibility = [
+        "//visibility:public"
+    ],
+)

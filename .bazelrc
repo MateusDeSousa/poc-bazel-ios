@@ -1,0 +1,54 @@
+build --color=yes
+build --worker_max_instances=auto
+
+build --apple_platform_type=ios
+build --disk_cache=./bazel-cache
+build --incompatible_new_actions_api=false
+
+build --compilation_mode=dbg
+
+build --strategy=SwiftCompile=worker
+
+build --copt="-fprofile-instr-generate"
+build --cxxopt="-fprofile-instr-generate"
+build --linkopt="-fprofile-instr-generate"
+build --swiftcopt="-profile-generate"
+build --copt="-fcoverage-mapping"
+build --cxxopt="-fcoverage-mapping"
+build --linkopt="-fcoverage-mapping"
+build --swiftcopt="-profile-coverage-mapping"
+
+
+build --incompatible_strict_action_env=true
+build --experimental_repository_cache_hardlinks
+build --experimental_repository_cache
+build --experimental_guard_against_concurrent_changes=true
+build --experimental_multi_threaded_digest
+
+build --incompatible_strict_action_env 
+build --cache_computed_file_digests=500000
+
+# Swift-specific features: https://github.com/bazelbuild/rules_swift/blob/master/swift/internal/features.bzl
+build --features=swift.enable_batch_mode
+build --features=swift.use_global_module_cache
+
+build --spawn_strategy=standalone
+build --genrule_strategy=standalone
+build --features=swift.opt_uses_wmo
+build --swiftcopt=-whole-module-optimization
+build --features=debug_prefix_map_pwd_is_dot
+build --ios_simulator_device="iPhone 13"
+
+# We can't create a bzl_library for rules-swift because of its visibility,
+# so circumvent by not using the sandbox
+build --strategy=Stardoc=standalone
+
+# Tests
+test --remote_upload_local_results=false
+test --test_output=errors
+test --verbose_failures
+#test --test_summary=detailed
+test --test_verbose_timeout_warnings
+
+# Build test remote cache
+test:test-remote-cache --remote_upload_local_results=false
