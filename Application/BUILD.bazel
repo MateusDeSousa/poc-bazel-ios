@@ -5,7 +5,9 @@ ios_application(
     name = "Application",
     bundle_id = "poc.intepolation",
     srcs = glob([
-        "*.swift"
+        "*.swift",
+        "*.m",
+        "*.h"
     ]),
     minimum_os_version = "12.1",
     families = [
@@ -13,6 +15,7 @@ ios_application(
     ],
     infoplists = ["//Application:UrlGet-Info.plist"],
     visibility = ["//visibility:public"],
+    swift_objc_bridging_header = "poc-bazel-ios-bridging-header.h",
     deps = [
         "@//ModuleObjc",
         "@//ModuleSwift"

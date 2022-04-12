@@ -25,5 +25,6 @@ final class MainViewController: UIViewController {
 
     @objc private func buttonForObjcAction() {
         let controller = FirstViewController()
+        let notificationObjc = NotificationObjc()
     }
 }
